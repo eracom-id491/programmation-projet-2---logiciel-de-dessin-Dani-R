@@ -1,10 +1,20 @@
 let saveButton;
 let PeutDessiner = false;
 let Etape = 1;
+let EtapeSTRING = ["","une tete", "un torse", "des jambes"];
+let Animaux = ["chien","chat","poissson","giraffe","crocodile","pingouin","singe","pigeon","poulet","vache","chevre"];
 let ZoneActuelle = 1;
-let timer = 2;
+let timer = 10;
+let myFont;
+let AnimalRandom;
+
+function preload() {
+  myFont = loadFont('font/Minecraft.ttf');
+}
 
 function setup() {
+  AnimalRandom = random(Animaux);
+  textFont(myFont);
   HauteurDeCase = windowHeight/3;
   createCanvas(windowWidth, windowHeight);
   saveButton = createButton("save");
@@ -12,40 +22,85 @@ function setup() {
   saveButton.mousePressed(downloadImage);
   background(20);
   Limites();
+  fill(255);
+  noStroke();
+  textAlign(LEFT, CENTER)
+  textSize(50);
+  text("Tete", 100, HauteurDeCase/2);
+  text("Torse", 100, HauteurDeCase/2 * 3);
+  text("Jambes", 100, HauteurDeCase/2 * 5);
+  textSize(18);
+  textAlign(CENTER, CENTER)
 }
 
 function draw() {
 
   HauteurDeCase = windowHeight/3;
+  noStroke();
+  fill(20);
+  rectMode(CENTER);
+  rect(windowWidth/2, 50, 500, 25);
+  fill(255);
+  if(Etape < 4)
+  {
+    text("Tu as " + timer + " secondes pour dessiner " + EtapeSTRING[Etape] + " de " + AnimalRandom, windowWidth/2,50);
+  }
+  else if(Etape >= 4)
+  {
+    text("Ton hybride est fini!",windowWidth/2,50);
+  }
+  stroke(255);
 
   //Zones Déttection
   Zones();
 
-  //Rectangle latérale
-  stroke(255);
-  fill(0);
-  rect(0,0,200,windowHeight);
-  fill(255);
-  textAlign(CENTER, CENTER);
-  text("Tête", 100, HauteurDeCase/2);
-  text("Torse", 100, HauteurDeCase/2 * 3);
-  text("Jambes", 100, HauteurDeCase/2 * 5);
-  textSize(30);
-
   //Timer
-  if(Etape < 4)
+  if(frameCount % 60 == 0){
+    timer --;
+  }
+  if(timer <= 0)
   {
-    if(frameCount % 60 == 0){
-      timer --;
-    }
-    if(timer <= 0)
-    {
-      Etape += 1;
-      timer = 2;
-    }
+    Etape += 1;
+    AnimalRandom = random(Animaux);
+    timer = 10;
   }
 
-
+  if(Etape == 1)
+  {
+    noStroke();
+    fill(0,255,0);
+    rect(0, 0, 50, (HauteurDeCase* 2));
+  }
+  else
+  {
+    noStroke();
+    fill(20);
+    rect(0, 0, 50, (HauteurDeCase* 2));
+  }
+  if(Etape == 2)
+  {
+    noStroke();
+    fill(0,255,0);
+    rect(0, HauteurDeCase, 50, (HauteurDeCase* 2));
+  }
+  else if(Etape > 2)
+  {
+    noStroke();
+    fill(20);
+    rect(0, HauteurDeCase, 50, (HauteurDeCase* 2));
+  }
+  if(Etape == 3)
+  {
+    noStroke();
+    fill(0,255,0);
+    rect(0, 0, 50, (HauteurDeCase* 2)*5);
+  }
+  else if(Etape > 3)
+  {
+    noStroke();
+    fill(20);
+    rect(0, 0, 50, (HauteurDeCase* 2)*5);
+  }
   stroke(255);
   //Dessin
   if(mouseIsPressed) {
@@ -60,15 +115,15 @@ function Limites()
 {
   fill(20);
   stroke(255);
+  strokeWeight(3);
   //Tête
   //Hauteur = de 0 à HauteurDeCase
-  rect(0,0,windowWidth,HauteurDeCase);
   //Torse
   //Hauteur = de Hauteur de case à HauteurDeCase * 2;
-  rect(0,HauteurDeCase,windowWidth,HauteurDeCase);
+  line(0,HauteurDeCase,windowWidth,HauteurDeCase)
   //Jambes
   //Hauteur = de Hauteur de case à HauteurDeCase * 3;
-  rect(0,HauteurDeCase*2,windowWidth,HauteurDeCase);
+  line(0,HauteurDeCase*2,windowWidth,HauteurDeCase*2);
 }
 
 function Zones()
