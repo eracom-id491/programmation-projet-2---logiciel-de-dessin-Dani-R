@@ -7,7 +7,7 @@ let timer = 10;
 let myFont;
 let AnimalRandom;
 let start = false;
-let canvas;
+let pg;
 
 function preload() {
   myFont = loadFont('font/Minecraft.ttf');
@@ -17,7 +17,8 @@ function setup() {
   AnimalRandom = random(Animaux);
   textFont(myFont);
   HauteurDeCase = windowHeight/3;
-  canvas = createCanvas(windowWidth * 2, windowHeight * 2);
+  createCanvas(windowWidth, windowHeight);
+  pg = createGraphics(windowWidth, windowHeight);
   saveButton = createButton("save");
   saveButton.position(width - 50, height - 25);
   saveButton.mousePressed(downloadImage);
@@ -112,8 +113,8 @@ function draw() {
     if(mouseIsPressed) {
       if(Etape == ZoneActuelle)
       {
-        line(mouseX, mouseY, pmouseX, pmouseY );
-        line(mouseX + windowWidth, mouseY + windowHeight, pmouseX + windowWidth, pmouseY + windowHeight);
+        line(mouseX, mouseY, pmouseX, pmouseY);
+        line(mouseX, mouseY, pmouseX, pmouseY);
       }
     }
   }
@@ -178,5 +179,5 @@ function keyTyped() {
 }
 
 function downloadImage() {
-  save(windowWidth,'myCanvas.jpg');
+  save(pg,'myCanvas.jpg');
 }
