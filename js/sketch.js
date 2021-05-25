@@ -3,7 +3,8 @@ let Etape = 1;
 let EtapeSTRING = ["","une tete", "un torse", "des jambes"];
 let Animaux = ["chien","chat","poissson","giraffe","crocodile","pingouin","singe","pigeon","poulet","vache","chevre"];
 let ZoneActuelle = 1;
-let timer = 10;
+let timer;
+let tempspourdessiner = 20;
 let myFont;
 let AnimalRandom;
 let start = false;
@@ -14,6 +15,7 @@ function preload() {
 }
 
 function setup() {
+  timer = tempspourdessiner;
   AnimalRandom = random(Animaux);
   textFont(myFont);
   HauteurDeCase = windowHeight/3;
@@ -75,7 +77,16 @@ function draw() {
     {
       Etape += 1;
       AnimalRandom = random(Animaux);
-      timer = 10;
+      stroke(20);
+      if(Etape >= 2)
+      {
+        line(0,HauteurDeCase,windowWidth,HauteurDeCase)
+      }
+      if(Etape >= 3)
+      {
+        line(0,HauteurDeCase*2,windowWidth,HauteurDeCase*2);
+      }
+      timer = tempspourdessiner;
     }
   
     if(Etape == 1)
@@ -179,5 +190,5 @@ function keyTyped() {
 }
 
 function downloadImage() {
-  save(pg,'myCanvas.jpg');
+  save("Hybride.jpg");
 }
