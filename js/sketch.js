@@ -1,31 +1,47 @@
-let saveButton;
+//ints
+let ZoneActuelle = 1;
+let tempspourdessiner = 20;
 let Etape = 1;
+let taille;
+//floats 
+let timer;
+//Listes
 let EtapeSTRING = ["","une tete", "un torse", "des jambes"];
 let Animaux = ["chien","chat","poissson","giraffe","crocodile","pingouin","singe","pigeon","poulet","vache","chevre","phasme"];
-let ZoneActuelle = 1;
-let timer;
-let tempspourdessiner = 20;
+//Bool
+let start = false;
+//Autres
 let myFont;
 let AnimalRandom;
-let start = false;
-let pg;
+let saveButton;
 
+//Load font
 function preload() {
   myFont = loadFont('font/Minecraft.ttf');
 }
 
 function setup() {
-  timer = tempspourdessiner;
-  AnimalRandom = random(Animaux);
-  textFont(myFont);
+  //Definir les variables
   HauteurDeCase = windowHeight/3;
+  timer = tempspourdessiner;
+  textFont(myFont);
+  taille = 1;
+  AnimalRandom = random(Animaux);
+  //Canvas
   createCanvas(windowWidth, windowHeight);
-  pg = createGraphics(windowWidth, windowHeight);
+  background(20);
+  //Bouton sauvegarde
   saveButton = createButton("save");
   saveButton.position(width - 50, height - 25);
   saveButton.mousePressed(downloadImage);
-  background(20);
+  //Afficher les limites
   Limites();
+  //Text Indicatif
+  textIndicatif();
+}
+
+function textIndicatif()
+{
   fill(255);
   noStroke();
   textAlign(LEFT, CENTER)
@@ -67,13 +83,14 @@ function draw() {
     if(mouseIsPressed) {
       if(Etape == ZoneActuelle)
       {
-        line(mouseX, mouseY, pmouseX, pmouseY);
+        strokeWeight(taille);
         line(mouseX, mouseY, pmouseX, pmouseY);
       }
     }
   }
 }
 
+//Text instructions
 function textcentral()
 {
   noStroke();
@@ -126,6 +143,7 @@ function changerdezone()
   }
 }
 
+//Compteur
 function Temps()
 {
   if(frameCount % 60 == 0){
@@ -204,6 +222,42 @@ function windowResized() {
 function keyTyped() {
   if (key === 's') {
     downloadImage();
+  }
+}
+
+//Changer la taille du piceau avec les fléches
+function keyPressed() {
+  if (keyCode === LEFT_ARROW) {
+    if(taille > 1)
+    {
+      taille--;
+    }
+  } else if (keyCode === RIGHT_ARROW) {
+    if(taille < 10)
+    {
+      taille++;
+    }
+  }
+}
+//Changer la taille du pinceau avec la molette
+function mouseWheel(event) {
+  print(event.delta);
+  //move the square according to the vertical scroll amount
+  //uncomment to block page scrolling
+  //return false;
+  if(event.delta < 0)
+  {
+    if(taille > 1)
+    {
+      taille-=0.4;
+    }
+  }
+  else if(event.delta > 0)
+  {
+    if(taille < 10)
+    {
+      taille+=0.4;
+    }
   }
 }
 
