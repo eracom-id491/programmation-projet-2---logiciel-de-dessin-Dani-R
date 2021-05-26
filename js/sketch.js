@@ -247,16 +247,16 @@ function mouseWheel(event) {
   //return false;
   if(event.delta < 0)
   {
-    if(taille > 1)
+    if(taille < 10)
     {
-      taille-=0.4;
+      taille+=0.4;
     }
   }
   else if(event.delta > 0)
   {
-    if(taille < 10)
+    if(taille > 1)
     {
-      taille+=0.4;
+      taille-=0.4;
     }
   }
 }
