@@ -1,6 +1,8 @@
 body {
   font-family: sans-serif;
   overflow: hidden;
+  background-color: #ffedcb;
+  color: rgb(20, 20, 20);
 }
 
 main {
@@ -28,4 +30,8 @@ main a {
   main p {
     max-width: 50vw;
   }
+}
+
+.evidence {
+  color: red;
 }
