@@ -51,74 +51,17 @@ function draw() {
   if(start == true)
   {
     HauteurDeCase = windowHeight/3;
-    noStroke();
-    fill(20);
-    rectMode(CENTER);
-    rect(windowWidth/2, 50, 500, 25);
-    fill(255);
-    if(Etape < 4)
-    {
-      text("Tu as " + timer + " secondes pour dessiner " + EtapeSTRING[Etape] + " de " + AnimalRandom, windowWidth/2,50);
-    }
-    else if(Etape >= 4)
-    {
-      text("Ton hybride est fini!",windowWidth/2,50);
-    }
-    stroke(255);
+    textcentral();
   
     //Zones Déttection
     Zones();
   
     //Timer
-    if(frameCount % 60 == 0){
-      timer --;
-    }
-    if(timer <= 0)
-    {
-      Etape += 1;
-      AnimalRandom = random(Animaux);
-      stroke(20);
-      if(Etape >= 2)
-      {
-        line(0,HauteurDeCase,windowWidth,HauteurDeCase)
-      }
-      if(Etape >= 3)
-      {
-        line(0,HauteurDeCase*2,windowWidth,HauteurDeCase*2);
-      }
-      timer = tempspourdessiner;
-    }
-  
-    if(Etape == 1)
-    {
-      noStroke();
-      fill(0,255,0);
-      rect(0, 0, 50, (HauteurDeCase* 2));
-    }
-    else
-    {
-      noStroke();
-      fill(20);
-      rect(0, 0, 50, (HauteurDeCase* 2));
-    }
-    if(Etape == 2)
-    {
-      noStroke();
-      fill(0,255,0);
-      rect(0, HauteurDeCase, 50, (HauteurDeCase* 2));
-    }
-    else if(Etape > 2)
-    {
-      noStroke();
-      fill(20);
-      rect(0, HauteurDeCase, 50, (HauteurDeCase* 2));
-    }
-    if(Etape >= 3)
-    {
-      noStroke();
-      fill(0,255,0);
-      rect(0, 0, 50, (HauteurDeCase* 2)*5);
-    }
+    Temps();
+
+    //change de zone
+    changerdezone();
+
     stroke(255);
     //Dessin
     if(mouseIsPressed) {
@@ -131,6 +74,81 @@ function draw() {
   }
 }
 
+function textcentral()
+{
+  noStroke();
+  fill(20);
+  rectMode(CENTER);
+  rect(windowWidth/2, 50, 500, 25);
+  fill(255);
+  if(Etape < 4)
+  {
+    text("Tu as " + timer + " secondes pour dessiner " + EtapeSTRING[Etape] + " de " + AnimalRandom, windowWidth/2,50);
+  }
+  else if(Etape >= 4)
+  {
+    text("Ton hybride est fini!",windowWidth/2,50);
+  }
+}
+
+//Détecte si il faut changer de zone
+function changerdezone()
+{
+  if(Etape == 1)
+  {
+    noStroke();
+    fill(0,255,0);
+    rect(0, 0, 50, (HauteurDeCase* 2));
+  }
+  else
+  {
+    noStroke();
+    fill(20);
+    rect(0, 0, 50, (HauteurDeCase* 2));
+  }
+  if(Etape == 2)
+  {
+    noStroke();
+    fill(0,255,0);
+    rect(0, HauteurDeCase, 50, (HauteurDeCase* 2));
+  }
+  else if(Etape > 2)
+  {
+    noStroke();
+    fill(20);
+    rect(0, HauteurDeCase, 50, (HauteurDeCase* 2));
+  }
+  if(Etape >= 3)
+  {
+    noStroke();
+    fill(0,255,0);
+    rect(0, 0, 50, (HauteurDeCase* 2)*5);
+  }
+}
+
+function Temps()
+{
+  if(frameCount % 60 == 0){
+    timer --;
+  }
+  if(timer <= 0)
+  {
+    Etape += 1;
+    AnimalRandom = random(Animaux);
+    stroke(20);
+    if(Etape >= 2)
+    {
+      line(0,HauteurDeCase,windowWidth,HauteurDeCase)
+    }
+    if(Etape >= 3)
+    {
+      line(0,HauteurDeCase*2,windowWidth,HauteurDeCase*2);
+    }
+    timer = tempspourdessiner;
+  }
+}
+
+//Dessiner les limites
 function Limites()
 {
   fill(20);
@@ -145,11 +163,11 @@ function Limites()
   //Hauteur = de Hauteur de case à HauteurDeCase * 3;
   line(0,HauteurDeCase*2,windowWidth,HauteurDeCase*2);
 }
-
+//Lancer le jeu
 function mouseClicked() {
   start = true;
 }
-
+//Zones dessinables
 function Zones()
 {
   fill(20);
@@ -182,7 +200,7 @@ function windowResized() {
   background(0);
   Limites();
 }
-
+//Sauvegarder l'image avec la touche S
 function keyTyped() {
   if (key === 's') {
     downloadImage();
