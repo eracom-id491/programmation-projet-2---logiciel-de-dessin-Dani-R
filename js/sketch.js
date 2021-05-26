@@ -1,7 +1,7 @@
 let saveButton;
 let Etape = 1;
 let EtapeSTRING = ["","une tete", "un torse", "des jambes"];
-let Animaux = ["chien","chat","poissson","giraffe","crocodile","pingouin","singe","pigeon","poulet","vache","chevre"];
+let Animaux = ["chien","chat","poissson","giraffe","crocodile","pingouin","singe","pigeon","poulet","vache","chevre","phasme"];
 let ZoneActuelle = 1;
 let timer;
 let tempspourdessiner = 20;
